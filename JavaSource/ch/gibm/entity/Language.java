@@ -8,7 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-
+//Une Comment
 @Entity
 public class Language implements Serializable{
 	private static final long serialVersionUID = 1L;
