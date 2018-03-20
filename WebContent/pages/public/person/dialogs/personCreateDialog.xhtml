@@ -11,7 +11,9 @@
 		<h:form id="personCreateDialogForm" prependId="false">
 			<h:panelGrid columns="2">
 				<h:outputText value="* #{bundle.personName}" />
-				<h:inputText value="#{personBean.person.name}" required="true" label="#{bundle.personName}" />
+				<h:inputText value="#{personBean.person.name}" required="true" label="#{bundle.personName}"/>
+				<h:outputText value="* #{bundle.personAge}" />
+				<h:inputText value="#{personBean.person.age}" required="true" label="#{bundle.personAge}"/>
 		
 				<p:commandButton value="#{bundle.create}" icon="ui-icon-plus"
 					action="#{personBean.createPerson()}"
