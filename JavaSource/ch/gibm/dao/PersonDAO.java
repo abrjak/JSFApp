@@ -12,11 +12,16 @@ public class PersonDAO extends GenericDAO<Person> {
 	public PersonDAO() {
 		super(Person.class);
 	}
+	
+	public Person findPersonByName(String personName) {
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("personName", personName);
+		return super.findOneResult(Person.FIND_PERSON_BY_NAME, parameters);
+	}
 
 	public Person findPersonWithAllLanguages(int personId) {
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("personId", personId);
-
 		return super.findOneResult(Person.FIND_PERSON_BY_ID_WITH_LANGUAGES, parameters);
 	}
 

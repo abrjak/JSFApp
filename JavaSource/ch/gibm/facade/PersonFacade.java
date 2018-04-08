@@ -23,6 +23,19 @@ public class PersonFacade implements Serializable {
 		EntityManagerHelper.commitAndCloseTransaction();
 	}
 
+	// Added loginPerson on 08.04.2018
+	public boolean loginPerson(Person person) {
+		EntityManagerHelper.beginTransaction();
+		Person persistedPerson = personDAO.findPersonByName(person.getName());
+		if (!persistedPerson.equals(null)) {
+			EntityManagerHelper.commitAndCloseTransaction();
+			return true;
+		} else {
+			EntityManagerHelper.commitAndCloseTransaction();
+			return false;
+		}
+	}
+	
 	public void updatePerson(Person person) {
 		EntityManagerHelper.beginTransaction();
 		Person persistedPerson = personDAO.find(person.getId());
@@ -49,7 +62,6 @@ public class PersonFacade implements Serializable {
 		EntityManagerHelper.beginTransaction();
 		List<Person> result = personDAO.findAll();
 		EntityManagerHelper.commitAndCloseTransaction();
-
 		return result;
 	}
 

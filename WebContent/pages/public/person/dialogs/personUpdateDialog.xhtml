@@ -12,7 +12,6 @@
 			<h:panelGrid columns="2">
 				<h:outputText value="* #{bundle.personName}" />
 				<h:inputText value="#{personBean.person.name}" required="true" label="#{bundle.personName}" />
-		
 				<p:commandButton value="#{bundle.update}" icon="ui-icon-plus"
 					action="#{personBean.updatePerson()}"
 					update=":messageGrowl :personsForm:personsTable"

@@ -8,14 +8,19 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
 @Entity
-@NamedQuery(name = "Person.findPersonByIdWithLanguages", query = "select p from Person p left join fetch p.languages where p.id = :personId")
+@NamedQueries({
+@NamedQuery(name = "Person.findPersonByIdWithLanguages", query = "select p from Person p left join fetch p.languages where p.id = :personId"),
+@NamedQuery(name = "Person.findPersonByName", query = "select p from Person p where p.name = :personName")
+})
 public class Person implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	public static final String FIND_PERSON_BY_ID_WITH_LANGUAGES = "Person.findPersonByIdWithLanguages";
+	public static final String FIND_PERSON_BY_NAME = "Person.findPersonByName";
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

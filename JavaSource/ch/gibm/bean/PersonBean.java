@@ -46,6 +46,23 @@ public class PersonBean extends AbstractBean implements Serializable {
 			e.printStackTrace();
 		}
 	}
+	
+	// Added loginPerson on 08.04.2018
+	public void loginPerson() {
+		try {
+			if(getPersonFacade().loginPerson(person)) {
+				closeDialog();
+				displayInfoMessageToUser("Logged in with Success");
+			} else {
+				keepDialogOpen();
+				displayErrorMessageToUser("Login Failed");
+			}
+		} catch (Exception e) {
+			keepDialogOpen();
+			displayErrorMessageToUser("A problem occurred while logging in. Try again later");
+			e.printStackTrace();
+		}
+	}
 
 	public void updatePerson() {
 		try {
