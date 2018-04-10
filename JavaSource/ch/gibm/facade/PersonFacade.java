@@ -10,6 +10,7 @@ import ch.gibm.dao.LanguageDAO;
 import ch.gibm.dao.PersonDAO;
 import ch.gibm.entity.Language;
 import ch.gibm.entity.Person;
+import ch.gibm.entity.Role;
 
 public class PersonFacade implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -77,4 +78,12 @@ public class PersonFacade implements Serializable {
 		language.getPersons().remove(person);
 		EntityManagerHelper.commitAndCloseTransaction();
 	}
+	
+	public void findRole(int personId) {
+		EntityManagerHelper.beginTransaction();
+		Person person = personDAO.find(personId);
+		Role role = person.getRole();
+		EntityManagerHelper.commitAndCloseTransaction();
+	}
+	
 }
