@@ -14,6 +14,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import ch.gibm.entity.User;
+
 public class LoginFilter implements Filter {
 	private static List<String> allowedURIs;
 
@@ -28,7 +30,6 @@ public class LoginFilter implements Filter {
 			allowedURIs.add("/JSFApp/javax.faces.resource/theme.css.xhtml");
 			allowedURIs.add("/JSFApp/javax.faces.resource/primefaces.js.xhtml");
 			allowedURIs.add("/JSFApp/javax.faces.resource/primefaces.css.xhtml");
-
 			allowedURIs.add("/JSFApp/javax.faces.resource/jquery/jquery.js.xhtml");
 		}
 	}
@@ -51,8 +52,10 @@ public class LoginFilter implements Filter {
 			doLogin(request, response, req);
 			return;
 		}
-		String userName = (String) session.getAttribute("user"); // 3
-		if (userName == null && !allowedURIs.contains(req.getRequestURI())) { // 4
+
+		User user = (User) session.getAttribute("user"); // 3
+
+		if (user == null && !allowedURIs.contains(req.getRequestURI())) { // 4
 			System.out.println(req.getRequestURI());
 			doLogin(request, response, req);
 			return;
