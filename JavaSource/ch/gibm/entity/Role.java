@@ -14,13 +14,12 @@ import javax.persistence.OneToMany;
 @Entity
 public class Role implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String name;
-
-	@OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
-	private List<Person> persons = new ArrayList<>();
 	
 	public Role(){
 		
@@ -40,17 +39,5 @@ public class Role implements Serializable {
 	
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public List<Person> getPersons() {
-		return persons;
-	}
-
-	public void setPersons(List<Person> persons) {
-		this.persons = persons;
-	}
-	
-	public void addPerson(Person person) {
-		this.persons.add(person);
 	}
 }
