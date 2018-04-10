@@ -5,18 +5,18 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 <h:body>
-	<ui:composition template="/pages/public/templates/master.xhtml">
+	<ui:composition template="/pages/protected/templates/master.xhtml">
 		<ui:define name="divMain">
-			<h:form id="loginForm">
-				<h:inputText value="#{loginBean.userName}" label="Username"
-					id="userName" required="true" autocomplete="off" />
+			<h:form>
+				<h:inputText value="#{loginBean.user}" label="Username"
+					id="user" required="true" autocomplete="off" />
 				<br />
 				<h:inputSecret value="#{loginBean.password}" label="Password"
 					id="pwd" required="true" autocomplete="off">
-					<f:validateLength minimum="6" />
+					<f:validateLength minimum="4" />
 				</h:inputSecret>
 				<br />
-				<p:commandButton action="#{loginBean.login}" value="Login"
+				<p:commandButton action="#{loginBean.login()}" value="Login"
 					ajax="false" />
 			</h:form>
 		</ui:define>
