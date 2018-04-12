@@ -78,12 +78,4 @@ public class PersonFacade implements Serializable {
 		language.getPersons().remove(person);
 		EntityManagerHelper.commitAndCloseTransaction();
 	}
-	
-	public void findRole(int personId) {
-		EntityManagerHelper.beginTransaction();
-		Person person = personDAO.find(personId);
-		Role role = person.getRole();
-		EntityManagerHelper.commitAndCloseTransaction();
-	}
-	
 }

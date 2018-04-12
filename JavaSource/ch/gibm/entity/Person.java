@@ -26,10 +26,6 @@ public class Person implements Serializable {
 	// added Age on 20.03.2018
 	private int age;
 	
-	@ManyToOne
-	@JoinColumn(name = "role", foreignKey = @javax.persistence.ForeignKey(name = "role_fk"))
-	private Role role;
-
 	@ManyToMany
 	private List<Language> languages;
 
@@ -78,13 +74,5 @@ public class Person implements Serializable {
 		}
 
 		return false;
-	}
-	
-	public void setRole(Role role) {
-		this.role = role;
-	}
-	
-	public Role getRole() {
-		return this.role;
 	}
 }

@@ -15,14 +15,12 @@ public class UserBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private User user;
 
-	// TODO: Replace with Role (see Mail by JW and wait for his code
-	
 	public boolean isAdmin() {
-		return user.isAdmin();
-	}
-
-	public boolean isDefaultUser() {
-		return user.isUser();
+		if (user.getRole().getName().equalsIgnoreCase("admin")) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public String logOut() {

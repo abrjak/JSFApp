@@ -20,14 +20,8 @@ import ch.gibm.facade.RoleFacade;
 public class RoleBean extends AbstractBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private static final String SELECTED_PERSON = "selectedPerson";
-
 	private Role role;
-	private Person person;
 	private List<Role> roles;
-	
-	//@ManagedProperty(value="#{personBean}")
-	//private PersonBean personBean;
 	
 	private RoleFacade roleFacade;
 
@@ -36,7 +30,7 @@ public class RoleBean extends AbstractBean implements Serializable {
 			getRoleFacade().createRole(role);
 			closeDialog();
 			displayInfoMessageToUser("Created with success");
-			loadRole();
+			loadRoles();
 			resetRole();
 		} catch (Exception e) {
 			keepDialogOpen();
@@ -54,13 +48,13 @@ public class RoleBean extends AbstractBean implements Serializable {
 
 	public List<Role> getAllRoles() {
 		if (role == null) {
-			loadRole();
+			loadRoles();
 		}
 
 		return roles;
 	}
 	
-	private void loadRole() {
+	private void loadRoles() {
 		roles = getRoleFacade().listAll();
 		System.out.println(roles);
 	}

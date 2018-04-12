@@ -124,10 +124,6 @@ public class PersonBean extends AbstractBean implements Serializable {
 
 		return personWithLanguagesForDetail;
 	}
-	
-	public boolean isAdmin() {
-		return true;
-	}
 
 	public void resetPersonWithLanguagesForDetail() {
 		personWithLanguagesForDetail = new Person();
