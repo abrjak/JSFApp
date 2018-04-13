@@ -7,19 +7,34 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import ch.gibm.entity.User;
+import ch.gibm.facade.UserFacade;
 
 @SessionScoped
 @ManagedBean(name = "userBean")
-public class UserBean implements Serializable {
+public class UserBean extends AbstractBean implements Serializable {
 	public static final String DI_NAME = "#{userBean}";
 	private static final long serialVersionUID = 1L;
 	private User user;
+	
+	private UserFacade userFacade;
 
 	public boolean isAdmin() {
 		if (user.getRole().getName().equalsIgnoreCase("admin")) {
 			return true;
 		} else {
 			return false;
+		}
+	}
+	
+	public void updateUser() {
+		try {
+			getUserFacade().updateUser(user);
+			closeDialog();
+			displayInfoMessageToUser("Updated with success");
+		} catch (Exception e) {
+			keepDialogOpen();
+			displayErrorMessageToUser("A problem occurred while updating. Try again later");
+			e.printStackTrace();
 		}
 	}
 
@@ -34,5 +49,20 @@ public class UserBean implements Serializable {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+	
+	public UserFacade getUserFacade() {
+		if (userFacade == null) {
+			userFacade = new UserFacade();
+		}
+
+		return userFacade;
+	}
+	
+	public String getHeader() {
+		String name = "Dude";
+		if(getUser() != null)
+			if (getUser().getName() != null) name = getUser().getName();
+		return name;
 	}
 }

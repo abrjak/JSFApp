@@ -22,6 +22,7 @@ public class User implements Serializable{
 	private int id;
 	private String userName;
 	private String password;
+	private String name;
 	
 	@ManyToOne
 	@JoinColumn(name = "role", foreignKey = @javax.persistence.ForeignKey(name = "fk_role_id"))
@@ -73,8 +74,16 @@ public class User implements Serializable{
 		this.role = role;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", userName=" + userName + ", password=" + password + ", role=" + role + "]";
+		return "User [id=" + id + ", name=" + name + ", userName=" + userName + ", password=" + password + ", role=" + role + "]";
 	}
 }

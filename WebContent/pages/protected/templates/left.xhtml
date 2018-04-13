@@ -15,6 +15,10 @@
 			<br />
 			<p:commandButton styleClass="menuButton" icon="ui-icon-arrowstop-1-e" rendered="#{userBean.admin}" action="/pages/protected/admin/role/roleIndex.xhtml?faces-redirect=true" value="#{bundle.rolePlural}" ajax="false" immediate="true" />
 			<br />
+			<p:commandButton styleClass="menuButton" icon="ui-icon-arrowstop-1-e" rendered="true" action="/pages/protected/profil/profilIndex.xhtml?faces-redirect=true" value="#{bundle.profil}" ajax="false" immediate="true" />
+			<br />
+			<p:commandButton styleClass="menuButton" icon="ui-icon-arrowstop-1-e" rendered="true" action="#{userBean.logOut()}" value="Logout" ajax="false" immediate="true"/>
+			<br />
 		</h:form>
 	</ui:composition>
 </h:body>

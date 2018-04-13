@@ -17,4 +17,14 @@ public class UserFacade implements Serializable{
 		EntityManagerHelper.commitAndCloseTransaction();
 		return validUser;
 	}
+	
+	public void updateUser(User user) {
+		EntityManagerHelper.beginTransaction();
+		User persistedUser = userDAO.find(user.getId());
+		persistedUser.setName(user.getName());
+		persistedUser.setUserName(user.getUserName());
+		persistedUser.setPassword(user.getPassword());
+		userDAO.update(user);
+		EntityManagerHelper.commitAndCloseTransaction();
+	}
 }
