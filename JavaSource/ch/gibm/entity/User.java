@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 
 @Entity
@@ -20,8 +22,10 @@ public class User implements Serializable{
 	private int id;
 	private String userName;
 	private String password;
-	private boolean isAdmin;
-	private boolean isUser;
+	
+	@ManyToOne
+	@JoinColumn(name = "role", foreignKey = @javax.persistence.ForeignKey(name = "fk_role_id"))
+	private Role role;
 
 	public int getId() {
 		return id;
@@ -47,22 +51,6 @@ public class User implements Serializable{
 		this.password = password;
 	}
 
-	public boolean isAdmin() {
-		return isAdmin;
-	}
-
-	public void setAdmin(boolean isAdmin) {
-		this.isAdmin = isAdmin;
-	}
-
-	public boolean isUser() {
-		return isUser;
-	}
-
-	public void setUser(boolean isUser) {
-		this.isUser = isUser;
-	}
-
 	@Override
 	public int hashCode() {
 		return id;
@@ -75,5 +63,18 @@ public class User implements Serializable{
 			return user.getId() == id;
 		}
 		return false;
+	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", userName=" + userName + ", password=" + password + ", role=" + role + "]";
 	}
 }

@@ -124,10 +124,6 @@ public class PersonBean extends AbstractBean implements Serializable {
 
 		return personWithLanguagesForDetail;
 	}
-	
-	public boolean isAdmin() {
-		return true;
-	}
 
 	public void resetPersonWithLanguagesForDetail() {
 		personWithLanguagesForDetail = new Person();
@@ -135,7 +131,7 @@ public class PersonBean extends AbstractBean implements Serializable {
 
 	public String editPersonLanguages() {
 		ELFlash.getFlash().put(SELECTED_PERSON, person);
-		return "/pages/public/person/personLanguages/personLanguages.xhtml";
+		return "/pages/protected/person/personLanguages/personLanguages.xhtml";
 	}
 
 	public PersonFacade getPersonFacade() {

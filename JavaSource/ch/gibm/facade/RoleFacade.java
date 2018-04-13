@@ -25,4 +25,11 @@ public class RoleFacade implements Serializable {
 		EntityManagerHelper.commitAndCloseTransaction();
 		return result;
 	}
+	
+	public Role getRoleById(int roleId) {
+		EntityManagerHelper.beginTransaction();
+		Role role = roleDAO.findById(roleId);
+		EntityManagerHelper.commitAndCloseTransaction();
+		return role;
+	}
 }

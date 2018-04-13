@@ -5,8 +5,10 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 <h:body>
-	<ui:composition template="/pages/protected/templates/master.xhtml">
-		<ui:define name="divMain">
+	<ui:composition template="/pages/protected/templates/plain.xhtml">
+		<ui:define name="divLogin">
+		#{bundle.loginMessage}<br />
+			<br />
 			<h:form>
 				<h:inputText value="#{loginBean.user}" label="Username"
 					id="user" required="true" autocomplete="off" />

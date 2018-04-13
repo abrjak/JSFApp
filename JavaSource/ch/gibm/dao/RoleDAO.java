@@ -18,4 +18,8 @@ public class RoleDAO  extends GenericDAO<Role>{
 	public void create (Role role) {
         	super.save(role);
 	}
+	
+	public Role findById(int roleId) {
+		return super.find(roleId);
+	}
 }

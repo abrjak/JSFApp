@@ -16,16 +16,13 @@ import javax.servlet.http.HttpSession;
 
 import ch.gibm.entity.User;
 
-public class LoginFilter implements Filter {
+public class AdminFilter implements Filter {
 	private static List<String> allowedURIs;
 
-	/**
-	 * @see Filter#init(FilterConfig)
-	 */
-	public void init(FilterConfig fConfig) throws ServletException {
+	@Override
+	public void init(FilterConfig arg0) throws ServletException {
 		if (allowedURIs == null) {
 			allowedURIs = new ArrayList<String>();
-			allowedURIs.add(fConfig.getInitParameter("loginActionURI"));
 			allowedURIs.add("/JSFApp/javax.faces.resource/main.css.xhtml");
 			allowedURIs.add("/JSFApp/javax.faces.resource/theme.css.xhtml");
 			allowedURIs.add("/JSFApp/javax.faces.resource/primefaces.js.xhtml");
@@ -34,42 +31,29 @@ public class LoginFilter implements Filter {
 		}
 	}
 
-	/**
-	 * @see Filter#destroy()
-	 */
+	@Override
 	public void destroy() {
 	}
 
-	/**
-	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
-	 */
+	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpSession session = req.getSession();
-		if (session.isNew()) {
-			doLogin(request, response, req);
-			return;
-		}
 
 		User user = (User) session.getAttribute("user");
 
 		if (user == null && !allowedURIs.contains(req.getRequestURI())) {
 			System.out.println(req.getRequestURI());
-			doLogin(request, response, req);
+			accessDenied(request, response, req);
+			return;
+		} else if (!user.getRole().getName().equalsIgnoreCase("admin")) {
+			accessDenied(request, response, req);
 			return;
 		}
 		chain.doFilter(request, response);
 	}
-
-	protected void doLogin(ServletRequest request, ServletResponse response, HttpServletRequest req)
-			throws ServletException, IOException {
-
-		RequestDispatcher rd = req.getRequestDispatcher("/pages/public/login.xhtml");
-		rd.forward(request, response);
-	}
-
+	
 	protected void accessDenied(ServletRequest request, ServletResponse response, HttpServletRequest req)
 			throws ServletException, IOException {
 
