@@ -1,9 +1,11 @@
 package ch.gibm.facade;
 
 import java.io.Serializable;
+import java.util.List;
 
 import ch.gibm.dao.EntityManagerHelper;
 import ch.gibm.dao.UserDAO;
+import ch.gibm.entity.Person;
 import ch.gibm.entity.User;
 
 public class UserFacade implements Serializable{
@@ -16,5 +18,12 @@ public class UserFacade implements Serializable{
 		User validUser = userDAO.findUserByNameAndPassword(userName, password);
 		EntityManagerHelper.commitAndCloseTransaction();
 		return validUser;
+	}
+	
+	public List<User> listAll() {
+		EntityManagerHelper.beginTransaction();
+		List<User> result = userDAO.findAll();
+		EntityManagerHelper.commitAndCloseTransaction();
+		return result;
 	}
 }

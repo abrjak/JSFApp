@@ -15,13 +15,54 @@
 
 						<h:outputText value="#{role.name}" />
 					</p:column>
+					<p:column>
+					<p:commandButton value="#{bundle.update}" icon="ui-icon-pencil" update=":roleUpdateDialogForm" onclick="PF('roleUpdateDialogWidget').show()" >
+							<f:setPropertyActionListener target="#{roleBean.role}" value="#{role}" />
+						</p:commandButton>
+						<p:spacer width="10px" />
+					</p:column>
 					
 				</p:dataTable>
 				<p:commandButton value="#{bundle.create} #{bundle.role}" icon="ui-icon-plus" update=":roleCreateDialogForm"
 					actionListener="#{roleBean.resetRole()}" onclick="PF('roleCreateDialogWidget').show()" />
 			</h:form>
+			<br></br>
+			<hr></hr>
+			<br></br>
+			<h:form id="userForm">
+				<p:dataTable id="userTable" value="#{userBean.allUsers}" var="user" emptyMessage="#{bundle.noRecords}" paginator="true" rows="10"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="5,10,15">
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{bundle.userName}" />
+						</f:facet>
+
+						<h:outputText value="#{user.userName}" />
+					</p:column>
+					<p:column>
+					<p:commandButton value="#{bundle.update}" icon="ui-icon-pencil" update=":userUpdateDialogForm" onclick="PF('userUpdateDialogWidget').show()" >
+							<f:setPropertyActionListener target="#{userBean.user}" value="#{user}" />
+						</p:commandButton>
+						<p:spacer width="10px" />
+						<p:commandButton value="#{bundle.delete}" icon="ui-icon-trash" update=":personDeleteDialogForm" onclick="PF('personDeleteDialogWidget').show()" >
+							<f:setPropertyActionListener target="#{personBean.person}" value="#{person}" />
+						</p:commandButton>
+						<p:spacer width="10px" />
+						<p:commandButton value="#{bundle.userEditRoles}" icon="ui-icon-contact" ajax="false"
+							action="#{userBean.editUserRoles()}">
+								<f:setPropertyActionListener target="#{userBean.user}" value="#{user}" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+				<p:commandButton value="#{bundle.create} #{bundle.user}" icon="ui-icon-plus" update=":userCreateDialogForm"
+					actionListener="#{userBean.resetUser()}" onclick="PF('userCreateDialogWidget').show()" />
+			</h:form>
 
 			<ui:include src="/pages/protected/admin/role/dialogs/roleCreateDialog.xhtml" />
+			<ui:include src="/pages/protected/admin/role/dialogs/roleUpdateDialog.xhtml" />
+			<ui:include src="/pages/protected/admin/role/dialogs/userCreateDialog.xhtml" />
+			<ui:include src="/pages/protected/admin/role/dialogs/userUpdateDialog.xhtml" />
 		</ui:define>
 	</ui:composition>
 </h:body>

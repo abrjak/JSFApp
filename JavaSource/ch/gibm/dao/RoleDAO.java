@@ -19,7 +19,8 @@ public class RoleDAO  extends GenericDAO<Role>{
         	super.save(role);
 	}
 	
-	public Role findById(int roleId) {
-		return super.find(roleId);
+	public void delete(int roleId) {
+		super.delete(roleId, Role.class);
 	}
+	
 }

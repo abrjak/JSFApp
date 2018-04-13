@@ -1,24 +1,20 @@
 package ch.gibm.bean;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
-import com.sun.faces.context.flash.ELFlash;
-
-import ch.gibm.entity.Person;
 import ch.gibm.entity.Role;
-import ch.gibm.facade.PersonFacade;
 import ch.gibm.facade.RoleFacade;
 
 @ViewScoped
 @ManagedBean(name="roleBean")
 public class RoleBean extends AbstractBean implements Serializable {
 	private static final long serialVersionUID = 1L;
+	
+	private static final String SELECTED_ROLE = "selectedPerson";
 
 	private Role role;
 	private List<Role> roles;
@@ -38,6 +34,34 @@ public class RoleBean extends AbstractBean implements Serializable {
 			e.printStackTrace();
 		}
 	}
+	
+	public void updateRole() {
+		try {
+			getRoleFacade().updateRole(role);
+			closeDialog();
+			displayInfoMessageToUser("Updated with success");
+			loadRoles();
+			resetRole();
+		} catch (Exception e) {
+			keepDialogOpen();
+			displayErrorMessageToUser("A problem occurred while updating. Try again later");
+			e.printStackTrace();
+		}
+	}
+	
+	public void deleteRole() {
+		try {
+			getRoleFacade().deleteRole(role);
+			closeDialog();
+			displayInfoMessageToUser("Deleted with success");
+			loadRoles();
+			resetRole();
+		} catch (Exception e) {
+			keepDialogOpen();
+			displayErrorMessageToUser("A problem occurred while removing. Try again later");
+			e.printStackTrace();
+		}
+	}
 
 	public RoleFacade getRoleFacade() {
 		if (roleFacade == null) {
@@ -50,7 +74,6 @@ public class RoleBean extends AbstractBean implements Serializable {
 		if (role == null) {
 			loadRoles();
 		}
-
 		return roles;
 	}
 	

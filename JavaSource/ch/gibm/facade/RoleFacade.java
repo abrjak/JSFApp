@@ -18,6 +18,20 @@ public class RoleFacade implements Serializable {
 		roleDAO.save(role);
 		EntityManagerHelper.commitAndCloseTransaction();
 	}
+	
+	public void updateRole(Role role) {
+		EntityManagerHelper.beginTransaction();
+		Role persistedRole = roleDAO.find(role.getId());
+		persistedRole.setName(role.getName());
+		EntityManagerHelper.commitAndCloseTransaction();
+	}
+	
+	public void deleteRole(Role role){
+		EntityManagerHelper.beginTransaction();
+		Role persistedRole= roleDAO.find(role.getId());
+		roleDAO.delete(persistedRole.getId());
+		EntityManagerHelper.commitAndCloseTransaction();
+	}
 
 	public List<Role> listAll() {
 		EntityManagerHelper.beginTransaction();
@@ -26,9 +40,9 @@ public class RoleFacade implements Serializable {
 		return result;
 	}
 	
-	public Role getRoleById(int roleId) {
+	public Role findRole(int roleId) {
 		EntityManagerHelper.beginTransaction();
-		Role role = roleDAO.findById(roleId);
+		Role role = roleDAO.find(roleId);
 		EntityManagerHelper.commitAndCloseTransaction();
 		return role;
 	}

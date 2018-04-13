@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui">
+<h:body>
+	<ui:composition template="/pages/protected/templates/master.xhtml">
+		<ui:define name="divMain">
+			<h3>#{bundle.userRoles}: <h:outputText value="#{userBean.userWithRoles.name}" /></h3> 
+			<h:form id="usersForm">
+				<p:dataTable id="usersTable" value="#{userBean.userWithRoles.roles}" var="role" emptyMessage="#{bundle.noRecords}" paginator="true" rows="10"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="5,10,15">
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{bundle.roleName}" />
+						</f:facet>
+
+						<h:outputText value="#{role.name}" />
+					</p:column>
+
+					<p:column>
+						<p:commandButton value="#{bundle.remove}" icon="ui-icon-plus" actionListener="#{userBean.resetRole}" onclick="PF('userRemoveRoleDialogWidget').show()" update=":userRemoveRoleDialogForm" >
+							<f:setPropertyActionListener target="#{userBean.role}" value="#{role}" />
+						</p:commandButton>
+						<p:spacer width="10px" />
+					</p:column>
+
+				</p:dataTable>
+				<p:commandButton value="#{bundle.add}  #{bundle.role}" icon="ui-icon-plus" onclick="PF('userAddRoleDialogWidget').show()" update=":userAddRoleDialogForm" />
+			</h:form>
+
+			<ui:include src="/pages/protected/admin/role/userRoles/dialogs/userAddRoleDialog.xhtml" />
+			<ui:include src="/pages/protected/admin/role/userRoles/dialogs/userRemoveRoleDialog.xhtml" />
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
