@@ -3,14 +3,12 @@ package ch.gibm.facade;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.EntityManager;
 
 import ch.gibm.dao.EntityManagerHelper;
 import ch.gibm.dao.LanguageDAO;
 import ch.gibm.dao.PersonDAO;
 import ch.gibm.entity.Language;
 import ch.gibm.entity.Person;
-import ch.gibm.entity.Role;
 
 public class PersonFacade implements Serializable {
 	private static final long serialVersionUID = 1L;

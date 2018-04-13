@@ -7,10 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.Version;
 
 @Entity
 @NamedQuery(name = "Person.findPersonByIdWithLanguages", query = "select p from Person p left join fetch p.languages where p.id = :personId")
@@ -25,6 +24,9 @@ public class Person implements Serializable {
 	private String name;
 	// added Age on 20.03.2018
 	private int age;
+	
+	@Version
+	private int version;
 	
 	@ManyToMany
 	private List<Language> languages;
@@ -51,6 +53,14 @@ public class Person implements Serializable {
 
 	public void setAge(int age) {
 		this.age = age;
+	}
+
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
 	}
 
 	public List<Language> getLanguages() {

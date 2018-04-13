@@ -1,15 +1,12 @@
 package ch.gibm.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.Version;
 
 @Entity
 public class Role implements Serializable {
@@ -20,6 +17,9 @@ public class Role implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String name;
+	
+	@Version
+	private int version;
 	
 	public Role(){
 		
@@ -39,5 +39,13 @@ public class Role implements Serializable {
 	
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
 	}
 }
