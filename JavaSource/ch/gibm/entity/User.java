@@ -8,15 +8,20 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
 @Entity
-@NamedQuery(name = "User.findUserByNameAndPassword", query = "select u from User u where u.userName = :userName and u.password = :password")
+@NamedQueries({
+@NamedQuery(name = "User.findUserByNameAndPassword", query = "select u from User u where u.userName = :userName and u.password = :password"),
+@NamedQuery(name = "User.findUserByIdWithRole", query = "select u from User u left join fetch u.role where u.id = :userId")
+})
 public class User implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	public static final String FIND_USER_BY_NAME_AND_PASSWORD = "User.findUserByNameAndPassword";
-
+	public static final String FIND_USER_BY_ID_WITH_ROLE = "User.findUserByIdWithRole";
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;

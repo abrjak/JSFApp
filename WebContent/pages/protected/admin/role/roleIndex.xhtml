@@ -45,9 +45,9 @@
 							<f:setPropertyActionListener target="#{userBean.user}" value="#{user}" />
 						</p:commandButton>
 						<p:spacer width="10px" />
-						<p:commandButton value="#{bundle.delete}" icon="ui-icon-trash" update=":personDeleteDialogForm" onclick="PF('personDeleteDialogWidget').show()" >
-							<f:setPropertyActionListener target="#{personBean.person}" value="#{person}" />
-						</p:commandButton>
+<!-- 						<p:commandButton value="#{bundle.delete}" icon="ui-icon-trash" update=":userDeleteDialogForm" onclick="PF('personDeleteDialogWidget').show()" > -->
+<!-- 							<f:setPropertyActionListener target="#{userBean.user}" value="#{user}" /> -->
+<!-- 						</p:commandButton> -->
 						<p:spacer width="10px" />
 						<p:commandButton value="#{bundle.userEditRoles}" icon="ui-icon-contact" ajax="false"
 							action="#{userBean.editUserRoles()}">

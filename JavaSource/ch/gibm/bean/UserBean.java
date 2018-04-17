@@ -18,13 +18,14 @@ import ch.gibm.facade.UserFacade;
 public class UserBean implements Serializable {
 	public static final String DI_NAME = "#{userBean}";
 	private static final long serialVersionUID = 1L;
-	
+
 	private static final String SELECTED_USER = "selectedUser";
-	
+
 	private Role role;
 	private User user;
+	private User userWithRole;
 	private List<User> users;
-	
+
 	private UserFacade userFacade;
 
 	public boolean isAdmin() {
@@ -39,7 +40,7 @@ public class UserBean implements Serializable {
 		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
 		return "/pages/public/login.xhtml";
 	}
-	
+
 	public UserFacade getUserFacade() {
 		if (userFacade == null) {
 			userFacade = new UserFacade();
@@ -47,12 +48,29 @@ public class UserBean implements Serializable {
 
 		return userFacade;
 	}
-	
+
+	public void addRoleToUser() {
+
+	}
+
+	public void removeRoleFromUser() {
+
+	}
+
 	public String editUserRoles() {
 		ELFlash.getFlash().put(SELECTED_USER, user);
-		return "/pages/protected/admin/roles/userRoles/userRoles.xhtml";
+		return "/pages/protected/admin/role/userRoles/userRoles.xhtml";
 	}
-	
+
+	public User getUserWithRole() {
+		if (userWithRole == null) {
+			user = (User) ELFlash.getFlash().get(SELECTED_USER);
+			userWithRole = getUserFacade().findUserWithAllRoles(user.getId());
+		}
+
+		return userWithRole;
+	}
+
 	public List<User> getAllUsers() {
 		if (users == null) {
 			loadPersons();
@@ -60,7 +78,7 @@ public class UserBean implements Serializable {
 
 		return users;
 	}
-	
+
 	private void loadPersons() {
 		users = getUserFacade().listAll();
 	}
@@ -72,8 +90,24 @@ public class UserBean implements Serializable {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
+
 	public void resetUser() {
 		user = new User();
+	}
+
+	public void resetRole() {
+		role = new Role();
+	}
+
+	public void setUserWithRole(User userWithRole) {
+		this.userWithRole = userWithRole;
+	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
 	}
 }

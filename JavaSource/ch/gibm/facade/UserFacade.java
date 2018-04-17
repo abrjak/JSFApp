@@ -26,4 +26,11 @@ public class UserFacade implements Serializable{
 		EntityManagerHelper.commitAndCloseTransaction();
 		return result;
 	}
+	
+	public User findUserWithAllRoles(int userId) {
+		EntityManagerHelper.beginTransaction();
+		User user = userDAO.findUserWithRole(userId);
+		EntityManagerHelper.commitAndCloseTransaction();
+		return user;
+	}
 }

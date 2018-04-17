@@ -3,6 +3,7 @@ package ch.gibm.dao;
 import java.util.HashMap;
 import java.util.Map;
 
+import ch.gibm.entity.Person;
 import ch.gibm.entity.User;
 
 public class UserDAO extends GenericDAO<User> {
@@ -23,5 +24,12 @@ public class UserDAO extends GenericDAO<User> {
 
 	public void delete(User user) {
         	super.delete(user.getId(), User.class);
+	}
+	
+	public User findUserWithRole (int userId) {
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("userId", userId);
+
+		return super.findOneResult(User.FIND_USER_BY_ID_WITH_ROLE, parameters);
 	}
 }

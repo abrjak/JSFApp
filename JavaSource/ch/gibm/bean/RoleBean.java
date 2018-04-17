@@ -14,7 +14,7 @@ import ch.gibm.facade.RoleFacade;
 public class RoleBean extends AbstractBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	private static final String SELECTED_ROLE = "selectedPerson";
+	private static final String SELECTED_ROLE = "selectedRole";
 
 	private Role role;
 	private List<Role> roles;

@@ -4,9 +4,9 @@
 <h:body>
 	<ui:composition template="/pages/protected/templates/master.xhtml">
 		<ui:define name="divMain">
-			<h3>#{bundle.userRoles}: <h:outputText value="#{userBean.userWithRoles.name}" /></h3> 
+			<h3>#{bundle.userRoles}: <h:outputText value="#{userBean.userWithRole.userName}" /></h3> 
 			<h:form id="usersForm">
-				<p:dataTable id="usersTable" value="#{userBean.userWithRoles.roles}" var="role" emptyMessage="#{bundle.noRecords}" paginator="true" rows="10"
+				<p:dataTable id="usersTable" value="#{userBean.userWithRole.role}" var="role" emptyMessage="#{bundle.noRecords}" paginator="true" rows="10"
 					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 					rowsPerPageTemplate="5,10,15">
 					<p:column>

@@ -138,7 +138,6 @@ public class PersonBean extends AbstractBean implements Serializable {
 		if (personFacade == null) {
 			personFacade = new PersonFacade();
 		}
-
 		return personFacade;
 	}
 
