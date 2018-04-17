@@ -7,6 +7,7 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.persistence.OptimisticLockException;
 
 import com.sun.faces.context.flash.ELFlash;
 
@@ -26,9 +27,8 @@ public class PersonBean extends AbstractBean implements Serializable {
 	private Person personWithLanguages;
 	private Person personWithLanguagesForDetail;
 
-	@ManagedProperty(value="#{languageBean}")
+	@ManagedProperty(value = "#{languageBean}")
 	private LanguageBean languageBean;
-	
 
 	private List<Person> persons;
 	private PersonFacade personFacade;
@@ -40,6 +40,10 @@ public class PersonBean extends AbstractBean implements Serializable {
 			displayInfoMessageToUser("Created with success");
 			loadPersons();
 			resetPerson();
+		} catch (OptimisticLockException ex) {
+			keepDialogOpen();
+			displayErrorMessageToUser("Data is already in use by another User. Try again later");
+			ex.printStackTrace();
 		} catch (Exception e) {
 			keepDialogOpen();
 			displayErrorMessageToUser("A problem occurred while saving. Try again later");
@@ -54,11 +58,16 @@ public class PersonBean extends AbstractBean implements Serializable {
 			displayInfoMessageToUser("Updated with success");
 			loadPersons();
 			resetPerson();
+		} catch (OptimisticLockException ex) {
+			keepDialogOpen();
+			displayErrorMessageToUser("Data is already in use by another User. Try again later");
+			ex.printStackTrace();
 		} catch (Exception e) {
 			keepDialogOpen();
 			displayErrorMessageToUser("A problem occurred while updating. Try again later");
 			e.printStackTrace();
 		}
+
 	}
 
 	public void deletePerson() {
@@ -68,6 +77,10 @@ public class PersonBean extends AbstractBean implements Serializable {
 			displayInfoMessageToUser("Deleted with success");
 			loadPersons();
 			resetPerson();
+		} catch (OptimisticLockException ex) {
+			keepDialogOpen();
+			displayErrorMessageToUser("Data is already in use by another User. Try again later");
+			ex.printStackTrace();
 		} catch (Exception e) {
 			keepDialogOpen();
 			displayErrorMessageToUser("A problem occurred while removing. Try again later");
@@ -82,6 +95,10 @@ public class PersonBean extends AbstractBean implements Serializable {
 			displayInfoMessageToUser("Added with success");
 			reloadPersonWithLanguages();
 			resetLanguage();
+		} catch (OptimisticLockException ex) {
+			keepDialogOpen();
+			displayErrorMessageToUser("Data is already in use by another User. Try again later");
+			ex.printStackTrace();
 		} catch (Exception e) {
 			keepDialogOpen();
 			displayErrorMessageToUser("A problem occurred while saving. Try again later");
@@ -96,6 +113,10 @@ public class PersonBean extends AbstractBean implements Serializable {
 			displayInfoMessageToUser("Removed with success");
 			reloadPersonWithLanguages();
 			resetLanguage();
+		} catch (OptimisticLockException ex) {
+			keepDialogOpen();
+			displayErrorMessageToUser("Data is already in use by another User. Try again later");
+			ex.printStackTrace();
 		} catch (Exception e) {
 			keepDialogOpen();
 			displayErrorMessageToUser("A problem occurred while removing. Try again later");
@@ -153,7 +174,7 @@ public class PersonBean extends AbstractBean implements Serializable {
 	public void setPerson(Person person) {
 		this.person = person;
 	}
-	
+
 	public void setLanguageBean(LanguageBean languageBean) {
 		this.languageBean = languageBean;
 	}
@@ -165,13 +186,13 @@ public class PersonBean extends AbstractBean implements Serializable {
 
 		return persons;
 	}
-	
+
 	public List<Language> getRemainingLanguages(String name) {
-		//get all languages as copy
+		// get all languages as copy
 		List<Language> res = new ArrayList<Language>(this.languageBean.getAllLanguages());
-		//remove already added languages
+		// remove already added languages
 		res.removeAll(personWithLanguages.getLanguages());
-		//remove when name not occurs
+		// remove when name not occurs
 		res.removeIf(l -> l.getName().toLowerCase().contains(name.toLowerCase()) == false);
 		return res;
 	}
