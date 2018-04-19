@@ -7,7 +7,6 @@ import java.util.Map.Entry;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
-import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
@@ -22,71 +21,32 @@ abstract class GenericDAO<T> implements Serializable {
 	}
 
 	public void save(T entity) {
-		try {
-			EntityManagerHelper.getEntityManager().persist(entity);
-		} catch (PersistenceException e) {
-			EntityManagerHelper.rollback();
-			System.out.println("A Problem occured while saving. Details:");
-			e.printStackTrace();
-		}
+		EntityManagerHelper.getEntityManager().persist(entity);
 	}
 
 	public void delete(Object id, Class<T> classe) {
-		try {
-			EntityManager em = EntityManagerHelper.getEntityManager();
-			T entityToBeRemoved = em.getReference(classe, id);
-			em.remove(entityToBeRemoved);
-		} catch (PersistenceException e) {
-			System.out.println("A Problem occured while deleting. Details:");
-			e.printStackTrace();
-		}
+		EntityManager em = EntityManagerHelper.getEntityManager();
+		T entityToBeRemoved = em.getReference(classe, id);
+		em.remove(entityToBeRemoved);
 	}
 
 	public T update(T entity) {
-		T persistedEntity = null;
-		try {
-			persistedEntity = EntityManagerHelper.getEntityManager().merge(entity);
-		} catch (PersistenceException e) {
-			System.out.println("A Problem occured while updating. Details:");
-			e.printStackTrace();
-		}
-		return persistedEntity;
+		return EntityManagerHelper.getEntityManager().merge(entity);
 	}
 
 	public T find(int entityID) {
-		T persistedEntity = null;
-		try {
-			persistedEntity = EntityManagerHelper.getEntityManager().find(entityClass, entityID);
-		} catch (PersistenceException e) {
-			System.out.println("A Problem occured while finding. Details:");
-			e.printStackTrace();
-		}
-		return persistedEntity;
+		return EntityManagerHelper.getEntityManager().find(entityClass, entityID);
 	}
 
 	public T findReferenceOnly(int entityID) {
-		T persistedEntity = null;
-		try {
-			persistedEntity = EntityManagerHelper.getEntityManager().getReference(entityClass, entityID);
-		} catch (PersistenceException e) {
-			System.out.println("A Problem occured while finding Reference. Details:");
-			e.printStackTrace();
-		}
-		return persistedEntity;
+		return EntityManagerHelper.getEntityManager().getReference(entityClass, entityID);
 	}
 
 	public List<T> findAll() {
-		List<T> persistedResultList = null;
-		try {
-			EntityManager em = EntityManagerHelper.getEntityManager();
-			CriteriaQuery<T> cq = em.getCriteriaBuilder().createQuery(this.entityClass);
-			cq.select(cq.from(entityClass));
-			persistedResultList = em.createQuery(cq).getResultList();
-		} catch (PersistenceException e) {
-			System.out.println("A Problem occured while finding ResultList. Details:");
-			e.printStackTrace();
-		}
-		return persistedResultList;
+		EntityManager em = EntityManagerHelper.getEntityManager();
+		CriteriaQuery<T> cq = em.getCriteriaBuilder().createQuery(this.entityClass);
+		cq.select(cq.from(entityClass));
+		return em.createQuery(cq).getResultList();
 	}
 
 	protected T findOneResult(String namedQuery, Map<String, Object> parameters) {
@@ -96,6 +56,7 @@ abstract class GenericDAO<T> implements Serializable {
 		try {
 			TypedQuery<T> query = em.createNamedQuery(namedQuery, this.entityClass);
 
+			// populate parameters
 			if (parameters != null && !parameters.isEmpty()) {
 				populateQueryParameters(query, parameters);
 			}
@@ -108,6 +69,7 @@ abstract class GenericDAO<T> implements Serializable {
 			System.out.println("Error while running query: " + e.getMessage());
 			e.printStackTrace();
 		}
+
 		return result;
 	}
 

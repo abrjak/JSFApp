@@ -35,7 +35,6 @@ public class PersonFacade implements Serializable {
 		Person persistedPersonWithIdOnly = personDAO.findReferenceOnly(person.getId());
 		personDAO.delete(persistedPersonWithIdOnly);
 		EntityManagerHelper.commitAndCloseTransaction();
-		
 	}
 
 	public Person findPerson(int personId) {

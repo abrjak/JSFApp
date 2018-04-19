@@ -8,6 +8,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.persistence.OptimisticLockException;
+import javax.persistence.PersistenceException;
 
 import com.sun.faces.context.flash.ELFlash;
 
@@ -40,7 +41,7 @@ public class PersonBean extends AbstractBean implements Serializable {
 			displayInfoMessageToUser("Created with success");
 			loadPersons();
 			resetPerson();
-		} catch (OptimisticLockException ex) {
+		} catch (PersistenceException ex) {
 			keepDialogOpen();
 			displayErrorMessageToUser("Data is already in use by another User. Try again later");
 			ex.printStackTrace();
@@ -58,7 +59,7 @@ public class PersonBean extends AbstractBean implements Serializable {
 			displayInfoMessageToUser("Updated with success");
 			loadPersons();
 			resetPerson();
-		} catch (OptimisticLockException ex) {
+		} catch (PersistenceException ex) {
 			keepDialogOpen();
 			displayErrorMessageToUser("Data is already in use by another User. Try again later");
 			ex.printStackTrace();
@@ -67,7 +68,6 @@ public class PersonBean extends AbstractBean implements Serializable {
 			displayErrorMessageToUser("A problem occurred while updating. Try again later");
 			e.printStackTrace();
 		}
-
 	}
 
 	public void deletePerson() {
@@ -77,7 +77,7 @@ public class PersonBean extends AbstractBean implements Serializable {
 			displayInfoMessageToUser("Deleted with success");
 			loadPersons();
 			resetPerson();
-		} catch (OptimisticLockException ex) {
+		} catch (PersistenceException ex) {
 			keepDialogOpen();
 			displayErrorMessageToUser("Data is already in use by another User. Try again later");
 			ex.printStackTrace();
@@ -95,7 +95,7 @@ public class PersonBean extends AbstractBean implements Serializable {
 			displayInfoMessageToUser("Added with success");
 			reloadPersonWithLanguages();
 			resetLanguage();
-		} catch (OptimisticLockException ex) {
+		} catch (PersistenceException ex) {
 			keepDialogOpen();
 			displayErrorMessageToUser("Data is already in use by another User. Try again later");
 			ex.printStackTrace();
@@ -113,7 +113,7 @@ public class PersonBean extends AbstractBean implements Serializable {
 			displayInfoMessageToUser("Removed with success");
 			reloadPersonWithLanguages();
 			resetLanguage();
-		} catch (OptimisticLockException ex) {
+		} catch (PersistenceException ex) {
 			keepDialogOpen();
 			displayErrorMessageToUser("Data is already in use by another User. Try again later");
 			ex.printStackTrace();
